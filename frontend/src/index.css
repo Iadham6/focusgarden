@@ -1,0 +1,496 @@
+/* ===============================
+   FocusGarden - Modern UI CSS
+   (Vanilla CSS, no frameworks)
+   =============================== */
+
+:root {
+  --bg: #0b1220;
+  --bg-2: #0f172a;
+  --card: rgba(17, 24, 39, 0.65);
+  --card-solid: #0b1020;
+  --border: rgba(148, 163, 184, 0.18);
+  --text: #e5e7eb;
+  --muted: rgba(229, 231, 235, 0.70);
+  --muted-2: rgba(229, 231, 235, 0.55);
+
+  --primary: #60a5fa;
+  --primary-2: #38bdf8;
+  --success: #34d399;
+  --warn: #fbbf24;
+  --danger: #fb7185;
+
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.40);
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.25);
+
+  --r-xl: 20px;
+  --r-lg: 16px;
+  --r-md: 12px;
+
+  --container: 1100px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 700px at 10% -10%, rgba(56, 189, 248, 0.20), transparent 55%),
+    radial-gradient(1000px 600px at 100% 0%, rgba(96, 165, 250, 0.18), transparent 50%),
+    radial-gradient(900px 600px at 60% 110%, rgba(52, 211, 153, 0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+  line-height: 1.5;
+
+  /* IMPORTANT: remove Vite center layout */
+  display: block;
+  min-width: 320px;
+}
+
+/* Links */
+a {
+  color: var(--primary-2);
+  text-decoration: none;
+  font-weight: 600;
+}
+a:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+
+/* Typography */
+h1, h2, h3 {
+  margin: 0 0 10px 0;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+}
+h1 { font-size: 32px; font-weight: 900; }
+h2 { font-size: 22px; font-weight: 800; }
+h3 { font-size: 16px; font-weight: 800; color: var(--muted); }
+
+p { margin: 10px 0; color: var(--muted); }
+
+/* Selection */
+::selection {
+  background: rgba(56, 189, 248, 0.35);
+}
+
+/* Scrollbar (Chrome/Edge) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.35); }
+
+/* ===============================
+   App Layout Helpers (use classes)
+   =============================== */
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 22px 18px 40px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 18, 32, 0.65);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px 18px 14px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: grid;
+  gap: 2px;
+}
+.brand-title {
+  font-size: 26px;
+  font-weight: 950;
+  letter-spacing: 0.8px;
+}
+.brand-sub {
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+.nav {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 18px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 18px;
+}
+
+.card + .card { margin-top: 14px; }
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.section-hint {
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  gap: 14px;
+}
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 860px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ===============================
+   Buttons / Inputs
+   =============================== */
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: rgba(2, 6, 23, 0.55);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.btn:hover {
+  border-color: rgba(96, 165, 250, 0.45);
+  background: rgba(2, 6, 23, 0.72);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.95), rgba(96, 165, 250, 0.95));
+  color: #06121f;
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.18);
+}
+.btn-primary:hover { opacity: 0.95; border-color: transparent; }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+}
+.btn-ghost:hover {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.btn-danger {
+  background: rgba(251, 113, 133, 0.12);
+  border-color: rgba(251, 113, 133, 0.25);
+}
+.btn-danger:hover {
+  background: rgba(251, 113, 133, 0.18);
+  border-color: rgba(251, 113, 133, 0.35);
+}
+
+.btn-active {
+  background: rgba(229, 231, 235, 0.92);
+  color: #0b1220;
+  border-color: rgba(229, 231, 235, 0.92);
+}
+
+.input, select.input, textarea.input {
+  width: 100%;
+  background: rgba(2, 6, 23, 0.55);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 12px;
+  border-radius: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.input:focus {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(2, 6, 23, 0.70);
+}
+
+/* Form row */
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.row > * { flex: 1; }
+@media (max-width: 640px) {
+  .row { flex-direction: column; align-items: stretch; }
+}
+
+/* ===============================
+   Lists / Items
+   =============================== */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+  border: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.45);
+  border-radius: 14px;
+}
+.item-main {
+  display: grid;
+  gap: 4px;
+}
+.item-title {
+  font-weight: 900;
+}
+.item-meta {
+  font-size: 12px;
+  color: var(--muted-2);
+}
+.badge {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.badge.low { border-color: rgba(52, 211, 153, 0.35); color: rgba(167, 243, 208, 0.95); }
+.badge.medium { border-color: rgba(251, 191, 36, 0.35); color: rgba(253, 230, 138, 0.95); }
+.badge.high { border-color: rgba(251, 113, 133, 0.35); color: rgba(254, 202, 202, 0.95); }
+
+.muted { color: var(--muted-2); }
+
+/* ===============================
+   Pomodoro
+   =============================== */
+
+.timer {
+  font-size: 56px;
+  font-weight: 950;
+  letter-spacing: 3px;
+  padding: 18px 0 6px;
+}
+
+.progress {
+  height: 10px;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.progress > div {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.95), rgba(52, 211, 153, 0.85));
+}
+
+/* ===============================
+   Garden
+   =============================== */
+
+.plant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(52, 211, 153, 0.22);
+  background: rgba(16, 185, 129, 0.10);
+}
+
+/* Footer */
+.footer {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+  color: var(--muted-2);
+  font-size: 12px;
+}
+
+/* ===== Flashcards Modal ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 520px;
+  max-width: 92%;
+  background: #fafaf9;
+  color: #020617;
+  border-radius: 18px;
+  padding: 22px 24px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.modal textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* Color picker */
+.color-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.color-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.color-btn.active {
+  border-color: #020617;
+}
+
+.color-sage { background: #e7f0e6; color: #2f7d32; }
+.color-amber { background: #fff3cd; color: #b45309; }
+.color-emerald { background: #e6f9f0; color: #047857; }
+.color-rose { background: #fdecec; color: #be123c; }
+
+.modal-submit {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  background: #4f9d64;
+  color: white;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+/* ===== Modal animation ===== */
+.modal {
+  animation: popIn 0.18s ease-out;
+}
+@keyframes popIn {
+  from { transform: translateY(8px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ===== Deck cards ===== */
+.deck-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 760px) {
+  .deck-grid { grid-template-columns: 1fr; }
+}
+
+.deck-card {
+  border-radius: 18px;
+  border: 1px solid rgba(148,163,184,0.18);
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+}
+.deck-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.35);
+}
+
+.deck-name {
+  font-weight: 950;
+  font-size: 16px;
+}
+.deck-desc {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(229,231,235,0.75);
+}
+
+/* color themes */
+.deck-sage { background: linear-gradient(135deg, rgba(16,185,129,0.18), rgba(2,6,23,0.55)); }
+.deck-amber { background: linear-gradient(135deg, rgba(251,191,36,0.18), rgba(2,6,23,0.55)); }
+.deck-emerald { background: linear-gradient(135deg, rgba(52,211,153,0.18), rgba(2,6,23,0.55)); }
+.deck-rose { background: linear-gradient(135deg, rgba(251,113,133,0.18), rgba(2,6,23,0.55)); }
+

@@ -30,3 +30,7 @@ build/
 *.njsproj
 *.sln
 *.sw?
+
+backend/*.db
+*.db
+

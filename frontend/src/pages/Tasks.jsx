@@ -6,6 +6,11 @@ export default function Tasks() {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("medium");
 
+  // NEW: search & filters (frontend-only)
+  const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
+
   async function load() {
     const data = await apiGet("/tasks");
     setTasks(data);
@@ -23,7 +28,7 @@ export default function Tasks() {
       title,
       priority,
       status: "todo",
-      tags: "web"
+      tags: "web",
     });
 
     setTitle("");
@@ -41,9 +46,23 @@ export default function Tasks() {
     load();
   }
 
+  // NEW: filtered view (does not change backend data)
+  const filteredTasks = tasks.filter((t) => {
+    const q = query.trim().toLowerCase();
+    const matchesQuery = !q || (t.title || "").toLowerCase().includes(q);
+
+    const matchesStatus =
+      statusFilter === "all" || (t.status || "todo") === statusFilter;
+
+    const matchesPriority =
+      priorityFilter === "all" || (t.priority || "medium") === priorityFilter;
+
+    return matchesQuery && matchesStatus && matchesPriority;
+  });
+
   return (
-    <div style={{ maxWidth: 620 }}>
-      <h2>Task Manager</h2>
+    <div style={{ padding: 24 }}>
+      <h2>Tasks</h2>
 
       <form onSubmit={addTask} style={{ marginBottom: 12 }}>
         <input
@@ -65,11 +84,48 @@ export default function Tasks() {
         <button style={{ marginLeft: 8 }}>Add</button>
       </form>
 
+      {/* NEW: search + quick filters */}
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search tasks..."
+          style={{ minWidth: 220 }}
+        />
+
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+          <option value="all">All status</option>
+          <option value="todo">To-Do</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+
+        <select value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
+          <option value="all">All priority</option>
+          <option value="low">low</option>
+          <option value="medium">medium</option>
+          <option value="high">high</option>
+        </select>
+
+        <button
+          type="button"
+          onClick={() => {
+            setQuery("");
+            setStatusFilter("all");
+            setPriorityFilter("all");
+          }}
+        >
+          Clear
+        </button>
+      </div>
+
       {tasks.length === 0 ? (
         <p>No tasks yet.</p>
+      ) : filteredTasks.length === 0 ? (
+        <p>No tasks match your filters.</p>
       ) : (
         <ul>
-          {tasks.map((t) => (
+          {filteredTasks.map((t) => (
             <li key={t.id} style={{ marginBottom: 10 }}>
               <b>{t.title}</b> — {t.priority} — <i>{t.status}</i>
 
